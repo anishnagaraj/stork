@@ -34,12 +34,13 @@ kind: Rule
 metadata:
   name: hello-world-rule
 spec:
-  - podSelector:
-      app: foo
-    actions:
-    - type: command
-      value: echo "hello world"
-      runInSinglePod: true
+  rules:
+    - podSelector:
+        app: foo
+      actions:
+      - type: command
+        value: echo "hello world"
+        runInSinglePod: true
 ```
 
 ### Mysql
@@ -53,13 +54,14 @@ kind: Rule
 metadata:
   name: presnap-rule
 spec:
-  - podSelector:
-      app: mysql
-    actions:
-    - type: command
-      background: true
-      # this command will flush tables with read lock
-      value: mysql --user=root --password=$MYSQL_ROOT_PASSWORD -Bse 'flush tables with read lock;system ${WAIT_CMD};'
+  rules:
+    - podSelector:
+        app: mysql
+      actions:
+      - type: command
+        background: true
+        # this command will flush tables with read lock
+        value: mysql --user=root --password=$MYSQL_ROOT_PASSWORD -Bse 'flush tables with read lock;system ${WAIT_CMD};'
 ```
 
 **Snapshot**
@@ -92,11 +94,12 @@ kind: Rule
 metadata:
   name: mongodb-presnap-rule
 spec:
-  - podSelector:
-      app: mongo-mongodb
-    actions:
-    - type: command
-      value: mongo --eval "printjson(db.fsyncLock())"
+  rules:
+    - podSelector:
+        app: mongo-mongodb
+      actions:
+      - type: command
+        value: mongo --eval "printjson(db.fsyncLock())"
 ```
 
 **Post-snapshot rule**
@@ -108,11 +111,12 @@ kind: Rule
 metadata:
   name: mongodb-postsnap-rule
 spec:
-  - podSelector:
-      app: mongo-mongodb
-    actions:
-    - type: command
-      value: mongo --eval "printjson(db.fsyncUnlock())"
+  rules:
+    - podSelector:
+        app: mongo-mongodb
+      actions:
+      - type: command
+        value: mongo --eval "printjson(db.fsyncUnlock())"
 ```
 
 **Snapshot**
@@ -146,11 +150,12 @@ kind: Rule
 metadata:
   name: cassandra-rule
 spec:
-  - podSelector:
-      app: cassandra
-    actions:
-    - type: command
-      value: nodetool flush
+  rules:
+    - podSelector:
+        app: cassandra
+      actions:
+      - type: command
+        value: nodetool flush
 ```
 
 **Snapshot**
